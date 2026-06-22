@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1, user-scalable=no">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Lift">
+<meta name="theme-color" content="#0e0f13">
+<title>Lift</title>
+<link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAALQAAAC0CAYAAAA9zQYyAAAERklEQVR4nO3c0XHbOBSGUUmTBswHV7DdpN7tZivIA1WCd3ZnMpM4lkSKpAD895zXJDYNfL6BKZnnUyfepveP1tfANtf5x/nUWLMLEHC+a4PAX/oJRVzX9UVxH/5JRMwr4z7sAwuZFmHv/gGFTMuwL6cdiZnW3ezynSFkepnWmye0mNnT1p42BS1mjrClq6fGu5Dp9QiyekKLmVda29uqoMVMC2u6Wxy0mGlpaX+73oeG1hYFbTrTgyUdPgxazPTkUY93gxYzPbrXpTM0UW4GbTrTs1t9fhm0mBnBV506chDlj6BNZ0byuVcTmii/BW06M6JfuzWhiSJoMoN23GBkP/s1oYkiaKL8//tajhukMKGJImiiCJooF+dnkpjQRBE0UQRNFEETRdBEETRRBE0UQRNF0EQRNFEETRRBE0XQRBE0UQRNFEETRdBEETRRBE0UQRNF0EQRNFEETRRBE0XQRPl26tz8/a+bfzb9/c9Lr6WSedB1P/f6KLB7CzrSAo9mHnzdL6Mv6jN/n9x17y7oZxepx8UdyRyy7l0FvXVxelvcUcxB695V0BAT9F7f5T1NixHMYeveTdCwB0ETRdBEETRRBE2Uw9/LMep7Ahhz3w+d0I9u5fRyq4ecfT8s6KUXLeosc+N9PyTohDe5MOa+7x60OGnZi7scRBE0UQRNFEETRdBE6f63vo9Q6U7MVOzV2FJBVwr589dcJewyR46KMVf8+ksEXWUzH6mwDvFBV9jENebw9YgPmlqig06fRs+ag9clOmjqETRRBE0UQRMlOugqr46tNQWvS3TQ1BMfdPI0esYUvh7xQVfYxKWmAutQIugqm3lPla//W8VNTX6lrGrIJYOuusmVlDlyUIOgiSJoogiaKIImyu5Bu4NAy14uPVykb4IMUwf7ftiRY+nFijnL1HjfDz1DP7poMWeaGu774a8UiramqdGrse5yEEXQRBE0UQRNFEET5ZL2U7G7KrXXvZugIS7ord/lvUyJ0UxB695V0FsWp6dFHdEUsu7dBd3Lm1wqmgLW/fw2vX+cOnbvN7R7XNAU86Dr3n3QMPyRA54laKIImiiCJoqgiSJoogiaKIImiqCJImiiCJoogiaKoIkiaKIImiiCJoqgiSJoogiaKIImiqCJImiiCJoogiaKoIlyuc4/zq0vAvZiQhNF0EQRNHlBO0eT4L+OTWiiCJrMoB07GNnPfk1oogia3KAdOxjRr92a0ET5I2hTmpF87tWEJsqXQZvSjOCrTm9OaFHTs1t9OnIQ5W7QpjQ9utflwwktanryqMdFRw5R04MlHTpDE2Vx0KY0LS3tb9WEFjUtrOlu9ZFD1LzS2t42PZPjbXr/2PLvYe/BuemHQtOaI2zpavNdDlGzp6097foYMEcQWg/GXe9Dm9a07uawBzWa1rQYgIc/eVTYvPJ/8pc+SlfcdV1f9NjmZs+GFne+a4Nnj/8LMQFSzQ1cvxIAAAAASUVORK5CYII=">
+<style>
+:root{--bg:#0e0f13;--card:#191b22;--card2:#21242d;--line:#2c303b;--txt:#f2f3f5;--mut:#9aa0ad;--acc:#ff5d3a;--good:#37c97e;}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;background:var(--bg);color:var(--txt);font-family:-apple-system,system-ui,Segoe UI,Roboto,sans-serif;-webkit-text-size-adjust:100%}
+body{padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+header{position:sticky;top:0;z-index:10;background:rgba(14,15,19,.92);backdrop-filter:blur(12px);border-bottom:1px solid var(--line);padding:14px 16px 8px}
+.htop{display:flex;justify-content:space-between;align-items:center}
+.hleft{display:flex;align-items:baseline;gap:10px}
+h1{font-size:20px;margin:0;letter-spacing:.3px}
+.date{color:var(--mut);font-size:13px}
+.pencil{background:var(--card2);border:1px solid var(--line);color:var(--mut);font-size:13px;font-weight:600;padding:7px 12px;border-radius:10px;cursor:pointer}
+.pencil.on{background:var(--acc);border-color:var(--acc);color:#fff}
+.tabs{display:flex;gap:6px;margin-top:12px;overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{flex:0 0 auto;min-width:42px;text-align:center;padding:8px 4px;border-radius:12px;background:var(--card);color:var(--mut);font-weight:600;font-size:14px;border:1px solid transparent}
+.tab .dn{display:block;font-size:10px;font-weight:500;margin-top:2px;color:var(--mut)}
+.tab.active{background:var(--acc);color:#fff;border-color:var(--acc)}
+.tab.active .dn{color:#ffd9cf}
+.tab.today{border-color:var(--acc)}
+main{padding:16px 16px 96px;max-width:680px;margin:0 auto}
+.dayhead{margin:4px 0 14px}
+.tag{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.8px;text-transform:uppercase;color:var(--acc);background:rgba(255,93,58,.12);padding:4px 10px;border-radius:999px}
+.dtitle{font-size:24px;font-weight:700;margin:10px 0 2px}
+.editbtn{background:none;border:none;color:var(--mut);font-size:13px;padding:2px 0;cursor:pointer;text-decoration:underline}
+.cardio{display:flex;gap:10px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:14px 0;font-size:14px;color:var(--mut)}
+.cardio b{color:var(--txt)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px;margin-bottom:12px;transition:opacity .2s}
+.card.done{opacity:.5}
+.crow{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.cname{font-size:16px;font-weight:650;line-height:1.25}
+.creps{color:var(--mut);font-size:13px;margin-top:2px}
+.creps .note{color:var(--acc)}
+.creps.tap{text-decoration:underline;cursor:pointer}
+.sets{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.set{width:46px;height:46px;border-radius:12px;background:var(--card2);border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--mut);user-select:none;cursor:pointer}
+.set.on{background:var(--good);border-color:var(--good);color:#04231a}
+.demobtn{margin-top:12px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--acc);background:none;border:none;padding:0;cursor:pointer}
+.demo{display:none;margin-top:12px}
+.demo.open{display:block}
+.demo .imgs{display:flex;gap:8px}
+.demo img{width:calc(50% - 4px);border-radius:12px;background:#fff;border:1px solid var(--line)}
+.demo .cue{margin-top:8px;font-size:13px;color:var(--mut);font-style:italic;line-height:1.45}
+.ctrls{display:flex;gap:8px;margin-top:12px}
+.ic{flex:0 0 auto;width:44px;height:38px;border-radius:10px;background:var(--card2);border:1px solid var(--line);color:var(--txt);font-size:16px;cursor:pointer}
+.ic.rm{color:var(--acc);margin-left:auto}
+.addrow{margin:4px 0 0}
+.add{width:100%;padding:13px;border-radius:14px;background:var(--card2);border:1px dashed var(--line);color:var(--mut);font-size:14px;font-weight:600;cursor:pointer}
+.rest{text-align:center;color:var(--mut);padding:30px 10px;font-size:15px;line-height:1.6}
+.bar{position:fixed;left:0;right:0;bottom:0;background:rgba(14,15,19,.95);backdrop-filter:blur(12px);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));display:flex;align-items:center;gap:12px;z-index:10}
+.prog{flex:1}
+.ptrack{height:8px;background:var(--card2);border-radius:99px;overflow:hidden}
+.pfill{height:100%;width:0;background:var(--good);transition:width .25s}
+.plabel{font-size:12px;color:var(--mut);margin-top:5px}
+.btn{background:var(--card2);border:1px solid var(--line);color:var(--mut);font-size:13px;font-weight:600;padding:9px 14px;border-radius:12px;cursor:pointer}
+.fab{position:fixed;right:16px;bottom:calc(80px + env(safe-area-inset-bottom));background:var(--card);border:1px solid var(--line);color:var(--txt);width:46px;height:46px;border-radius:50%;font-size:18px;z-index:10;cursor:pointer}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-end;z-index:20}
+.modal.open{display:flex}
+.sheet{background:var(--card);border-top-left-radius:20px;border-top-right-radius:20px;padding:20px 18px calc(24px + env(safe-area-inset-bottom));width:100%;max-height:80vh;overflow:auto;border:1px solid var(--line)}
+.sheet h2{margin:0 0 12px;font-size:18px}
+.sheet p{font-size:14px;line-height:1.6;color:var(--mut);margin:0 0 12px}
+.sheet b{color:var(--txt)}
+.sheet .x{float:right;color:var(--mut);font-size:22px;background:none;border:none;cursor:pointer}
+.pick{display:block;width:100%;text-align:left;background:var(--card2);border:1px solid var(--line);color:var(--txt);font-size:15px;padding:13px 14px;border-radius:12px;margin-bottom:8px;cursor:pointer}
+.danger{color:var(--acc);border-color:rgba(255,93,58,.4)}
+</style>
+</head>
+<body>
+<header>
+ <div class="htop">
+  <div class="hleft"><h1>Lift</h1><span class="date" id="date"></span></div>
+  <button class="pencil" id="edit">Edit</button>
+ </div>
+ <div class="tabs" id="tabs"></div>
+</header>
+<main id="main"></main>
+<button class="fab" id="info">i</button>
+<div class="bar">
+ <div class="prog"><div class="ptrack"><div class="pfill" id="pfill"></div></div><div class="plabel" id="plabel"></div></div>
+ <button class="btn" id="reset">Reset day</button>
+</div>
+
+<div class="modal" id="modal"><div class="sheet">
+ <button class="x" data-close>&times;</button>
+ <h2>Cheat Sheet</h2>
+ <p><b>Weight rule:</b> pick a load you can do at the bottom of the rep range but struggle near the top. Hit the top on all sets, then add a rep, a set, slow the lower to 3 sec, or move 11s to 25s.</p>
+ <p><b>Rest:</b> ~45-60 sec between sets to keep the heart rate up for fat loss.</p>
+ <p><b>Cardio:</b> Moderate = talk-but-not-sing pace. Intervals = 30-60s hard / 90s easy x 8-10. Don't go hard every day.</p>
+ <p><b>Food:</b> ~1700 cal, protein first at ~180-200g/day. Don't eat back cardio calories.</p>
+ <p><b>Reality:</b> Weeks 1-2 feel rough, just show up. Joint pain = stop; muscle soreness = fine. Take a baseline photo today.</p>
+ <h2 style="margin-top:18px">Customize</h2>
+ <p>Tap <b>Edit</b> (top right) to reorder, add, remove, or change sets/reps right here. Or edit the config at the top of the Lift.html file on your computer.</p>
+ <button class="pick danger" id="resetplan">Reset everything to the original plan</button>
+</div></div>
+
+<div class="modal" id="addmodal"><div class="sheet">
+ <button class="x" data-close>&times;</button>
+ <h2>Add exercise</h2>
+ <div id="picklist"></div>
+</div></div>
+
+<script>
+/* ============================================================
+   LIFT  —  THE BRAIN (edit anything below)
+   ============================================================
+   HOW TO EDIT:
+
+   1) MOVE an exercise: cut a "[ ... ]" line in WEEK and paste it
+      where you want, on any day. Order in the list = order in the app.
+
+   2) ADD an exercise to a day: add a line  ["Name", sets, "reps", "note"]
+      The "note" is optional. The "Name" must match a key in LIBRARY below.
+
+   3) ADD a brand-new exercise to LIBRARY:
+      "My Exercise": { img:"", img2:"", cue:"how to do it" },
+      Photos are optional — leave img/img2 as "" and it just shows the cue.
+
+   4) CHANGE sets or reps: edit the numbers/text in the line.
+
+   5) RENAME a day or its cardio: edit tag / title / cardio.
+
+   You can ALSO edit on your phone: tap the pencil (top right).
+   Phone edits are saved on the device and OVERRIDE this file. If you
+   edit this file later and don't see changes, open the app, tap the
+   pencil, then "Reset to plan" to re-sync to this file.
+   ============================================================ */
+
+
+const LIBRARY = {
+  "Incline Dumbbell Bench Press": { img:"images/exercises/Incline_Dumbbell_Press_0.jpg", img2:"images/exercises/Incline_Dumbbell_Press_1.jpg", cue:"Bench ~30 degrees. Press up and slightly together; lower to upper chest." },
+  "Seated Dumbbell Shoulder Press": { img:"images/exercises/Dumbbell_Shoulder_Press_0.jpg", img2:"images/exercises/Dumbbell_Shoulder_Press_1.jpg", cue:"Back supported, dumbbells at ear height, press straight overhead." },
+  "Dumbbell Lateral Raise": { img:"images/exercises/Side_Lateral_Raise_0.jpg", img2:"images/exercises/Side_Lateral_Raise_1.jpg", cue:"Use the 11s. Slight elbow bend, raise out to shoulder height. Your #1 shoulder-broadener." },
+  "Incline Dumbbell Fly": { img:"images/exercises/Incline_Dumbbell_Flyes_0.jpg", img2:"images/exercises/Incline_Dumbbell_Flyes_1.jpg", cue:"Slight fixed elbow bend; open wide like a big hug, squeeze to close." },
+  "Goblet Squat": { img:"images/exercises/Goblet_Squat_0.jpg", img2:"images/exercises/Goblet_Squat_1.jpg", cue:"Hold one 25 at your chest. Sit back and down, chest up, knees over toes." },
+  "Bench Crunches": { img:"images/exercises/Crunches_0.jpg", img2:"images/exercises/Crunches_1.jpg", cue:"Low back stays down, curl shoulders up with the abs, don't yank your neck." },
+  "One-Arm Dumbbell Row": { img:"images/exercises/One-Arm_Dumbbell_Row_0.jpg", img2:"images/exercises/One-Arm_Dumbbell_Row_1.jpg", cue:"Hand and knee on bench, flat back. Pull to your hip, squeeze the shoulder blade." },
+  "Seated Dumbbell Curl": { img:"images/exercises/Seated_Dumbbell_Curl_0.jpg", img2:"images/exercises/Seated_Dumbbell_Curl_1.jpg", cue:"Seated, elbows pinned to sides, curl and squeeze, lower slow." },
+  "Hammer Curl": { img:"images/exercises/Hammer_Curls_0.jpg", img2:"images/exercises/Hammer_Curls_1.jpg", cue:"Palms face each other the whole rep. Builds outer arm and forearm width." },
+  "Arnold Press": { img:"images/exercises/Arnold_Dumbbell_Press_0.jpg", img2:"images/exercises/Arnold_Dumbbell_Press_1.jpg", cue:"Start palms facing you at chin, rotate out as you press overhead." },
+  "Reverse Lunge": { img:"images/exercises/Dumbbell_Rear_Lunge_0.jpg", img2:"images/exercises/Dumbbell_Rear_Lunge_1.jpg", cue:"Step back into a lunge, both knees ~90 degrees, drive through the front heel." },
+  "Standing Calf Raise": { img:"images/exercises/Standing_Dumbbell_Calf_Raise_0.jpg", img2:"images/exercises/Standing_Dumbbell_Calf_Raise_1.jpg", cue:"Rise onto the balls of your feet, pause up top, lower slow. Hold a dumbbell." },
+  "Flat Dumbbell Bench Press": { img:"images/exercises/Dumbbell_Bench_Press_0.jpg", img2:"images/exercises/Dumbbell_Bench_Press_1.jpg", cue:"Flat bench, dumbbells at chest, press up and slightly together. Main chest builder." },
+  "Dumbbell Squat": { img:"images/exercises/Dumbbell_Squat_0.jpg", img2:"images/exercises/Dumbbell_Squat_1.jpg", cue:"One 25 in each hand at your sides. Sit back and down, stand tall." },
+  "Single-Arm Dumbbell Curl": { img:"images/exercises/Concentration_Curls_0.jpg", img2:"images/exercises/Concentration_Curls_1.jpg", cue:"One arm at a time, elbow fixed, full squeeze at the top." },
+  "Close-Grip Dumbbell Press": { img:"images/exercises/Close-Grip_Dumbbell_Press_0.jpg", img2:"images/exercises/Close-Grip_Dumbbell_Press_1.jpg", cue:"Both 25s pressed together over chest, elbows tucked. Triceps mean bigger arms." },
+  "Overhead Triceps Extension": { img:"images/exercises/Standing_Dumbbell_Triceps_Extension_0.jpg", img2:"images/exercises/Standing_Dumbbell_Triceps_Extension_1.jpg", cue:"One dumbbell in both hands overhead, lower behind head, extend up. Elbows in." },
+  "Bench Sit-Ups": { img:"images/exercises/Sit-Up_0.jpg", img2:"images/exercises/Sit-Up_1.jpg", cue:"Full sit-up on the bench, controlled up and down." },
+  "Glute Bridge": { img:"images/exercises/Butt_Lift_Bridge_0.jpg", img2:"images/exercises/Butt_Lift_Bridge_1.jpg", cue:"On your back, knees bent, feet flat. Squeeze your glutes and lift your hips to a straight line, lower slow. Easy on the back." },
+  "Dead Bug": { img:"images/exercises/Dead_Bug_0.jpg", img2:"images/exercises/Dead_Bug_1.jpg", cue:"On your back, arms up, knees bent at 90. Slowly lower opposite arm and leg, keep your low back pressed into the floor." },
+  "Superman": { img:"images/exercises/Superman_0.jpg", img2:"images/exercises/Superman_1.jpg", cue:"Face down, arms out front. Lift arms, chest, and legs a few inches, squeeze, lower slow. Gentle low-back builder." },
+  "Dumbbell Shrug": { img:"images/exercises/Dumbbell_Shrug_0.jpg", img2:"images/exercises/Dumbbell_Shrug_1.jpg", cue:"Dumbbells at your sides, arms straight. Shrug your shoulders straight up toward your ears, squeeze, lower slow. Don't roll them." },
+};
+
+const WEEK = {
+  Mon: {
+    tag: "Strength A", title: "Push: Chest & Shoulders",
+    cardio: "Moderate ride ~25-30 min after lifting",
+    items: [
+      ["Incline Dumbbell Bench Press", 3, "8-12"],
+      ["Seated Dumbbell Shoulder Press", 3, "8-12"],
+      ["Dumbbell Lateral Raise", 3, "12-15", "use the 11s"],
+      ["Incline Dumbbell Fly", 3, "10-15"],
+      ["Goblet Squat", 3, "12-15"],
+      ["Bench Crunches", 3, "15-20"],
+    ],
+  },
+  Tue: {
+    tag: "Strength B", title: "Pull: Back & Arms",
+    cardio: "Hard intervals: 30-60s hard / 90s easy x 8-10",
+    items: [
+      ["One-Arm Dumbbell Row", 4, "8-12", "per side"],
+      ["Dumbbell Shrug", 3, "12-15"],
+      ["Seated Dumbbell Curl", 3, "10-12"],
+      ["Hammer Curl", 3, "10-12"],
+      ["Arnold Press", 3, "8-12"],
+      ["Reverse Lunge", 3, "10", "per leg"],
+      ["Standing Calf Raise", 3, "15-20"],
+    ],
+  },
+  Wed: {
+    tag: "Core", title: "Core + Recovery (beginner)",
+    cardio: "Easy spin 20-30 min, then 10 min stretch",
+    items: [
+      ["Glute Bridge", 3, "12-15"],
+      ["Dead Bug", 3, "8", "per side"],
+      ["Superman", 3, "10", "hold 2 sec"],
+      ["Bench Crunches", 2, "12-15"],
+    ],
+  },
+  Thu: {
+    tag: "Strength C", title: "Chest & Shoulders",
+    cardio: "Moderate ride ~25-30 min after lifting",
+    items: [
+      ["Flat Dumbbell Bench Press", 3, "8-12"],
+      ["Incline Dumbbell Fly", 3, "10-15"],
+      ["Seated Dumbbell Shoulder Press", 3, "8-12"],
+      ["Dumbbell Lateral Raise", 3, "12-15", "use the 11s"],
+      ["One-Arm Dumbbell Row", 3, "10-12", "per side"],
+      ["Dumbbell Squat", 3, "10-15"],
+      ["Dead Bug", 3, "8", "per side"],
+    ],
+  },
+  Fri: {
+    tag: "Strength D", title: "Arms & Core",
+    cardio: "Hard intervals: 30-60s hard / 90s easy x 8-10",
+    items: [
+      ["Seated Dumbbell Curl", 3, "10-12"],
+      ["Single-Arm Dumbbell Curl", 3, "10-12", "per arm"],
+      ["Close-Grip Dumbbell Press", 3, "10"],
+      ["Overhead Triceps Extension", 3, "12"],
+      ["Bench Sit-Ups", 3, "15-20"],
+    ],
+  },
+  Sat: {
+    tag: "Cardio", title: "Long Easy Ride",
+    cardio: "40-60 min easy pace, road or indoor. Should feel good.",
+    items: [],
+  },
+  Sun: {
+    tag: "Off", title: "Rest Day",
+    cardio: "Optional 15 min walk or stretch. Recover.",
+    items: [],
+  },
+};
+
+const $=s=>document.querySelector(s);
+const todayIdx=(new Date().getDay()+6)%7; // Mon=0
+let cur=todayIdx, editMode=false;
+
+function normItem(t){return Array.isArray(t)?{ex:t[0],sets:t[1],reps:t[2],note:t[3]||''}:{ex:t.ex,sets:t.sets,reps:t.reps,note:t.note||''};}
+function defaultWeek(){const w={};for(const d in WEEK){const s=WEEK[d];w[d]={tag:s.tag,title:s.title,cardio:s.cardio,items:(s.items||[]).map(normItem)};}return w;}
+let WK = JSON.parse(localStorage.getItem('lift-week-v2')||'null');
+if(!WK) WK = defaultWeek();
+function saveWK(){localStorage.setItem('lift-week-v2',JSON.stringify(WK));}
+
+const prog=JSON.parse(localStorage.getItem('lift-prog-v2')||'{}');
+const saveProg=()=>localStorage.setItem('lift-prog-v2',JSON.stringify(prog));
+const pkey=(day,name)=>day+'|'+name;
+
+const ORDER=Object.keys(WK);
+$('#date').textContent=new Date().toLocaleDateString(undefined,{weekday:'long',month:'short',day:'numeric'});
+
+function exDone(day,it){const a=prog[pkey(day,it.ex)]||[];return a.filter(Boolean).length>=it.sets;}
+
+function renderTabs(){
+ const t=$('#tabs');t.innerHTML='';
+ ORDER.forEach((d,i)=>{
+  const b=document.createElement('div');
+  b.className='tab'+(i===cur?' active':'')+(i===todayIdx?' today':'');
+  b.innerHTML=d.charAt(0)+'<span class="dn">'+(WK[d].tag||'').split(' ')[0]+'</span>';
+  b.onclick=()=>{cur=i;render();};
+  t.appendChild(b);
+ });
+}
+
+function render(){
+ renderTabs();
+ const day=ORDER[cur],P=WK[day],main=$('#main');
+ let h='<div class="dayhead"><span class="tag">'+(P.tag||'')+(day===ORDER[todayIdx]?' · TODAY':'')+'</span><div class="dtitle">'+P.title+'</div>';
+ if(editMode) h+='<button class="editbtn" data-act="renameDay">edit day name / cardio</button>';
+ h+='</div>';
+ h+='<div class="cardio"><span>🚴</span><div><b>Cardio:</b> '+P.cardio+'</div></div>';
+
+ (P.items||[]).forEach((it,i)=>{
+  const meta=LIBRARY[it.ex]||{cue:'',img:'',img2:''};
+  const arr=prog[pkey(day,it.ex)]||[];
+  const done=exDone(day,it);
+  let body;
+  if(editMode){
+   body='<div class="ctrls">'+
+     '<button class="ic" data-act="up" data-i="'+i+'">↑</button>'+
+     '<button class="ic" data-act="down" data-i="'+i+'">↓</button>'+
+     '<button class="ic rm" data-act="rm" data-i="'+i+'">✕</button></div>';
+  } else {
+   let sets='';for(let s=0;s<it.sets;s++){sets+='<div class="set'+(arr[s]?' on':'')+'" data-act="set" data-name="'+encodeURIComponent(it.ex)+'" data-s="'+s+'">'+(s+1)+'</div>';}
+   const demo=(meta.img? '<div class="demo" id="demo'+i+'"><div class="imgs"><img loading="lazy" src="'+meta.img+'"><img loading="lazy" src="'+meta.img2+'"></div>'+(meta.cue?'<div class="cue">'+meta.cue+'</div>':'')+'</div>'
+                       : '<div class="demo" id="demo'+i+'"><div class="cue">'+(meta.cue||'No demo yet.')+'</div></div>');
+   body='<div class="sets">'+sets+'</div>'+
+        '<button class="demobtn" data-act="demo" data-i="'+i+'">▸ Show me how</button>'+demo;
+  }
+  const reps='<div class="creps'+(editMode?' tap':'')+'"'+(editMode?' data-act="reps" data-i="'+i+'"':'')+'>'+it.sets+' × '+it.reps+(it.note?' <span class="note">· '+it.note+'</span>':'')+'</div>';
+  h+='<div class="card'+(!editMode&&done?' done':'')+'" id="card'+i+'"><div class="crow"><div><div class="cname">'+it.ex+'</div>'+reps+'</div></div>'+body+'</div>';
+ });
+
+ if(editMode){
+  h+='<div class="addrow"><button class="add" data-act="add">+ Add exercise</button></div>';
+ } else if(!(P.items||[]).length){
+  h+='<div class="rest">'+(day==='Sun'?'Take the day off. Recovery is when the work pays off.':'No lifting today, just the ride above. Enjoy it.')+'</div>';
+ }
+ main.innerHTML=h;
+ main.onclick=onMain;
+ updateProg();
+}
+
+function onMain(ev){
+ const el=ev.target.closest('[data-act]'); if(!el) return;
+ const day=ORDER[cur],P=WK[day],act=el.dataset.act;
+ if(act==='set'){
+  const name=decodeURIComponent(el.dataset.name),s=+el.dataset.s,k=pkey(day,name);
+  const arr=prog[k]||(prog[k]=[]);arr[s]=!arr[s];saveProg();
+  render();return;
+ }
+ if(act==='demo'){const d=$('#demo'+el.dataset.i);d.classList.toggle('open');el.textContent=(d.classList.contains('open')?'▾ Hide':'▸ Show me how');return;}
+ if(act==='up'){const i=+el.dataset.i;if(i>0){[P.items[i-1],P.items[i]]=[P.items[i],P.items[i-1]];saveWK();render();}return;}
+ if(act==='down'){const i=+el.dataset.i;if(i<P.items.length-1){[P.items[i+1],P.items[i]]=[P.items[i],P.items[i+1]];saveWK();render();}return;}
+ if(act==='rm'){const i=+el.dataset.i;if(confirm('Remove '+P.items[i].ex+'?')){P.items.splice(i,1);saveWK();render();}return;}
+ if(act==='reps'){
+  const i=+el.dataset.i,it=P.items[i];
+  const ns=prompt('Sets?',it.sets); if(ns===null)return;
+  const nr=prompt('Reps? (e.g. 8-12)',it.reps); if(nr===null)return;
+  const nn=prompt('Note? (blank for none)',it.note||'');
+  it.sets=Math.max(1,parseInt(ns)||it.sets);it.reps=nr||it.reps;it.note=(nn||'').trim();saveWK();render();return;
+ }
+ if(act==='renameDay'){
+  const t=prompt('Day title?',P.title); if(t!==null&&t.trim())P.title=t.trim();
+  const g=prompt('Cardio line?',P.cardio); if(g!==null)P.cardio=g.trim();
+  const tg=prompt('Short tag? (e.g. Strength A)',P.tag); if(tg!==null)P.tag=tg.trim();
+  saveWK();render();return;
+ }
+ if(act==='add'){openAdd();return;}
+}
+
+function openAdd(){
+ const day=ORDER[cur];
+ const list=$('#picklist');list.innerHTML='';
+ Object.keys(LIBRARY).forEach(name=>{
+  const b=document.createElement('button');b.className='pick';b.textContent=name;
+  b.onclick=()=>{WK[day].items.push({ex:name,sets:3,reps:'10-12',note:''});saveWK();$('#addmodal').classList.remove('open');render();};
+  list.appendChild(b);
+ });
+ $('#addmodal').classList.add('open');
+}
+
+function updateProg(){
+ const day=ORDER[cur],P=WK[day];
+ if(editMode){$('#pfill').style.width='0%';$('#plabel').textContent='Editing — tap Edit again to finish';return;}
+ if(!(P.items||[]).length){$('#pfill').style.width='0%';$('#plabel').textContent='Cardio / rest day';return;}
+ let total=0,done=0;
+ P.items.forEach(it=>{total+=it.sets;done+=((prog[pkey(day,it.ex)]||[]).filter(Boolean).length);});
+ const pct=total?Math.round(done/total*100):0;
+ $('#pfill').style.width=pct+'%';
+ $('#plabel').textContent=done+' / '+total+' sets'+(pct===100?'  ✅ done':'');
+}
+
+$('#edit').onclick=()=>{editMode=!editMode;$('#edit').classList.toggle('on',editMode);$('#edit').textContent=editMode?'Done':'Edit';render();};
+$('#reset').onclick=()=>{if(editMode){editMode=false;$('#edit').classList.remove('on');$('#edit').textContent='Edit';render();return;}
+ const day=ORDER[cur];if(confirm('Clear today’s checkmarks?')){(WK[day].items||[]).forEach(it=>delete prog[pkey(day,it.ex)]);saveProg();render();}};
+$('#info').onclick=()=>$('#modal').classList.add('open');
+$('#resetplan').onclick=()=>{if(confirm('Reset the whole plan and all edits back to the original? Your checkmarks are kept.')){localStorage.removeItem('lift-week-v2');location.reload();}};
+document.querySelectorAll('[data-close]').forEach(b=>b.onclick=()=>b.closest('.modal').classList.remove('open'));
+document.querySelectorAll('.modal').forEach(mo=>mo.onclick=ev=>{if(ev.target===mo)mo.classList.remove('open');});
+render();
+</script>
+</body>
+</html>
