@@ -48,9 +48,12 @@ main{padding:16px 16px 96px;max-width:680px;margin:0 auto}
 .demobtn{margin-top:12px;display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;color:var(--acc);background:none;border:none;padding:0;cursor:pointer}
 .demo{display:none;margin-top:12px}
 .demo.open{display:block}
+.demo .mediatabs{display:flex;gap:6px;margin-bottom:10px}
+.demo .mtab{font-size:12px;font-weight:600;color:var(--mut);background:var(--card2);border:1px solid var(--line);border-radius:999px;padding:5px 14px;cursor:pointer}
+.demo .mtab.active{background:var(--acc);border-color:var(--acc);color:#fff}
 .demo .imgs{display:flex;gap:8px}
 .demo .imgs img{width:calc(50% - 4px);border-radius:12px;background:#fff;border:1px solid var(--line)}
-.demo .video{position:relative;margin-top:8px;padding-bottom:56.25%;border-radius:12px;overflow:hidden;cursor:pointer;background:#000}
+.demo .video{position:relative;margin-top:0;padding-bottom:56.25%;border-radius:12px;overflow:hidden;cursor:pointer;background:#000}
 .demo .video img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border:0}
 .demo .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .demo .playbtn{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:54px;height:54px;border-radius:50%;background:rgba(0,0,0,.55);color:#fff;display:flex;align-items:center;justify-content:center;font-size:20px;padding-left:3px;pointer-events:none}
@@ -289,9 +292,20 @@ function render(){
      '<button class="ic rm" data-act="rm" data-i="'+i+'">✕</button></div>';
   } else {
    let sets='';for(let s=0;s<it.sets;s++){sets+='<div class="set'+(arr[s]?' on':'')+'" data-act="set" data-name="'+encodeURIComponent(it.ex)+'" data-s="'+s+'">'+(s+1)+'</div>';}
-   const vid=(meta.video? '<div class="video" data-act="play" data-vid="'+meta.video+'"><img loading="lazy" src="https://i.ytimg.com/vi/'+meta.video+'/hqdefault.jpg" alt=""><span class="playbtn">▶</span></div>':'');
-   const demo=(meta.img? '<div class="demo" id="demo'+i+'"><div class="imgs"><img loading="lazy" src="'+meta.img+'"><img loading="lazy" src="'+meta.img2+'"></div>'+vid+(meta.cue?'<div class="cue">'+meta.cue+'</div>':'')+'</div>'
-                       : '<div class="demo" id="demo'+i+'">'+vid+'<div class="cue">'+(meta.cue||'No demo yet.')+'</div></div>');
+   const hasV=!!meta.video, hasP=!!meta.img;
+   const vidEl='<div class="video" id="vid'+i+'" data-act="play" data-vid="'+meta.video+'"><img loading="lazy" src="https://i.ytimg.com/vi/'+meta.video+'/hqdefault.jpg" alt=""><span class="playbtn">▶</span></div>';
+   const imgsEl=function(hide){return '<div class="imgs" id="imgs'+i+'"'+(hide?' hidden':'')+'><img loading="lazy" src="'+meta.img+'"><img loading="lazy" src="'+meta.img2+'"></div>';};
+   let media;
+   if(hasV&&hasP){
+    media='<div class="mediatabs">'+
+          '<button class="mtab active" data-act="media" data-i="'+i+'" data-mode="video">Video</button>'+
+          '<button class="mtab" data-act="media" data-i="'+i+'" data-mode="photos">Photos</button>'+
+          '</div>'+vidEl+imgsEl(true);
+   } else if(hasV){ media=vidEl; }
+   else if(hasP){ media=imgsEl(false); }
+   else { media=''; }
+   const cueEl=(meta.cue?'<div class="cue">'+meta.cue+'</div>':(media?'':'<div class="cue">No demo yet.</div>'));
+   const demo='<div class="demo" id="demo'+i+'">'+media+cueEl+'</div>';
    body='<div class="sets">'+sets+'</div>'+
         '<button class="demobtn" data-act="demo" data-i="'+i+'">▸ Show me how</button>'+demo;
   }
@@ -319,6 +333,7 @@ function onMain(ev){
  }
  if(act==='demo'){const d=$('#demo'+el.dataset.i);d.classList.toggle('open');el.textContent=(d.classList.contains('open')?'▾ Hide':'▸ Show me how');return;}
  if(act==='play'){el.innerHTML='<iframe src="https://www.youtube-nocookie.com/embed/'+el.dataset.vid+'?autoplay=1&rel=0" allow="autoplay; encrypted-media; picture-in-picture; fullscreen" allowfullscreen></iframe>';el.removeAttribute('data-act');return;}
+ if(act==='media'){const i=el.dataset.i,mode=el.dataset.mode,v=$('#vid'+i),p=$('#imgs'+i);if(v)v.hidden=mode!=='video';if(p)p.hidden=mode!=='photos';el.parentNode.querySelectorAll('.mtab').forEach(b=>b.classList.toggle('active',b===el));return;}
  if(act==='up'){const i=+el.dataset.i;if(i>0){[P.items[i-1],P.items[i]]=[P.items[i],P.items[i-1]];saveWK();render();}return;}
  if(act==='down'){const i=+el.dataset.i;if(i<P.items.length-1){[P.items[i+1],P.items[i]]=[P.items[i],P.items[i+1]];saveWK();render();}return;}
  if(act==='rm'){const i=+el.dataset.i;if(confirm('Remove '+P.items[i].ex+'?')){P.items.splice(i,1);saveWK();render();}return;}
