@@ -23,8 +23,8 @@ h1{font-size:20px;margin:0;letter-spacing:.3px}
 .pencil.on{background:var(--acc);border-color:var(--acc);color:#fff}
 .tabs{display:flex;gap:6px;margin-top:12px;overflow-x:auto;scrollbar-width:none}
 .tabs::-webkit-scrollbar{display:none}
-.tab{flex:0 0 auto;min-width:42px;text-align:center;padding:8px 4px;border-radius:12px;background:var(--card);color:var(--mut);font-weight:600;font-size:14px;border:1px solid transparent}
-.tab .dn{display:block;font-size:10px;font-weight:500;margin-top:2px;color:var(--mut)}
+.tab{flex:1 1 0;min-width:0;text-align:center;padding:8px 4px;border-radius:12px;background:var(--card);color:var(--mut);font-weight:600;font-size:14px;border:1px solid transparent;overflow:hidden}
+.tab .dn{display:block;font-size:10px;font-weight:500;margin-top:2px;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .tab.active{background:var(--acc);color:#fff;border-color:var(--acc)}
 .tab.active .dn{color:#ffd9cf}
 .tab.today{border-color:var(--acc)}
